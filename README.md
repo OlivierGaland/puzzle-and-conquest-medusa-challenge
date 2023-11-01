@@ -45,3 +45,6 @@ INIT5A = [ ['A','B','C','B'],
   PREFER solve_multithread !
 
 solve_multithread(INIT5A)
+
+Output once a solution is found : The sequence to apply is show as a list of "x=>y" meaning move flask x content to flask y 
+![image](https://github.com/OlivierGaland/puzzle-and-conquest-medusa-challenge/assets/26048157/6ac89aa3-f34a-4b9e-ba30-b75874eb6afd)
