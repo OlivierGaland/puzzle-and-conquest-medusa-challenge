@@ -14,37 +14,10 @@ How to use it :
 
 Example :
 
-A yellow, B red, C pink, D clear blue
-E dark green, F purple, G green, H dark blue
-I orange
+![image](https://github.com/OlivierGaland/puzzle-and-conquest-medusa-challenge/assets/26048157/dfbadca9-c420-41ad-b212-1fd4edd2b8b3)
 
-INIT5A = [ ['A','B','C','B'],
-          ['D','C','E','C'],
-          ['D','F','B','G'],
-          ['G','H','E','I'],
-          ['F','I','F','G'],
-          ['I','H','C','G'], 
-          ['H','D','A','F'], 
-          ['H','A','E','D'],
-          ['A','E','B','I'],
-          EMPTY_FLASK,
-          EMPTY_FLASK ]
+![image](https://github.com/OlivierGaland/puzzle-and-conquest-medusa-challenge/assets/26048157/7c5e0d25-46d0-488a-8f07-b82d0f6c61b4)
 
-  define your INIT array 
-     note the bottom of the flask is at left side of array, top is at right 
-     use a single letter for each color, and EMPTY_FLASK if flask is empty
-
-  call :
-          solve_monothread   : try all moves in sequence (could take time if you are not lucky on the first move)
-       or solve_multithread  : will create a thread for each possible first move x second move (should be faster to solve as some first move have no solution)
-
-    solve_monothread(INIT5A)   : solve INIT5A trying moves in sequence
-    solve_monothread(INIT5A,3) : solve INIT5A with the 3th initial move as the first move
-    solve_multithread(INIT5A)  : solve INIT5A with multithreading (1 thread for each combination of fixed first and second move)
-
-  PREFER solve_multithread !
-
-solve_multithread(INIT5A)
 
 Output once a solution is found : The sequence to apply is show as a list of "x=>y" meaning move flask x content to flask y 
 ![image](https://github.com/OlivierGaland/puzzle-and-conquest-medusa-challenge/assets/26048157/6ac89aa3-f34a-4b9e-ba30-b75874eb6afd)
