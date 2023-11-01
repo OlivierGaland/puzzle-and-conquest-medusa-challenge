@@ -4,13 +4,7 @@ Python script to help solving medusa challenge in mobile game puzzle and conques
 This script will help solving this challenge in this mobile game : 
  - you have several flasks with different color tiles, you need to end with flasks having same color tiles
 
-Start :
-![image](https://github.com/OlivierGaland/puzzle-and-conquest-medusa-challenge/assets/26048157/8b3d1419-b7e8-4d98-b911-5d6aceb144ae)
-
-
-End (almost finished) :
-![image](https://github.com/OlivierGaland/puzzle-and-conquest-medusa-challenge/assets/26048157/286dfc60-3348-4368-b340-610a658cc0bd)
-
+![image](https://github.com/OlivierGaland/puzzle-and-conquest-medusa-challenge/assets/26048157/eb665d28-ed23-4c06-81da-db2ed915b4ea)
 
 How to use it :
 - Get the python script
@@ -30,7 +24,6 @@ INIT5A = [ ['A','B','C','B'],
           ['G','H','E','I'],
           ['F','I','F','G'],
           ['I','H','C','G'], 
-
           ['H','D','A','F'], 
           ['H','A','E','D'],
           ['A','E','B','I'],
