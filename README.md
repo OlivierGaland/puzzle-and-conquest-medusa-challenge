@@ -7,7 +7,7 @@ This script will help solving this challenge in this mobile game :
 ![image](https://github.com/OlivierGaland/puzzle-and-conquest-medusa-challenge/assets/26048157/eb665d28-ed23-4c06-81da-db2ed915b4ea)
 
 How to use it :
-- Get the python script
+- Get the python script (you may need to install logging tool og-log : pip install og-log)
 - Add inside an array describing the mapping of the flasks
 - Add inside the call to solve the enigma
 - Run the script and wait
