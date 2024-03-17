@@ -136,7 +136,8 @@ class Factory:
     def solve(self,fingerprint):
 
         if self.is_win():
-            LOG.info("Solution found "+str(self.history))
+            LOG.info("Solution found : "+str(self.history))
+            print(self)
             return
 
         if self.is_fail(): return
