@@ -1,8 +1,7 @@
-from PIL import Image,ImageDraw
+from PIL import Image
 from enum import Enum
 
 
-# TODO : MISSING 3 COLORS for level 8 , 9 and 10 ! TO Add here
 class Color(Enum):
     Purple = ([123, 39, 202],[169, 84, 248],'A')
     DarkGreen = ([2, 85, 84],[46, 132, 133],'B')
@@ -15,6 +14,11 @@ class Color(Enum):
     Red = ([166, 7, -2],[212, 52, 45],'I')
     DarkRed = ([84, 8, 34],[131, 51, 80],'J')
     Green = ([54, 169, 23],[108, 217, 80],'K')
+
+    DarkPink = ([202, 72, 99],[257, 121, 146],'L')
+    Grey = ([80, 83, 87],[125, 126, 129],'M')
+    DarkBlue = ([47, 36, 167],[101, 89, 229],'N')
+
 
     def __repr__(self):
         return self.name
