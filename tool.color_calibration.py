@@ -21,7 +21,7 @@ class Color(Enum):
 
 image = Image.open("./img/pic001.orig.jpg")  # 1080 x 2400
 image_rgb = image.convert("RGB")
-red = (0,0,0)
+red = (255,0,0)
 
 #rect = ((140,520),(180,560)) #purple
 #rect = ((140,605),(180,645)) #dark green
@@ -37,7 +37,7 @@ red = (0,0,0)
 #rect = ((760,775),(800,815)) #green
 
 #rect = ((325,510),(340,525)) #darkblue
-rect = ((636,592),(651,607)) #DarkPink
+rect = ((636,592),(651,607)) #Grey
 
 
 # Check graphically if rectangle is correctly placed on the pic for scan

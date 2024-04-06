@@ -1,6 +1,8 @@
 from PIL import Image
 from enum import Enum
+import time
 
+from og_log import LOG
 
 class Color(Enum):
     Purple = ([123, 39, 202],[169, 84, 248],'A')
@@ -30,15 +32,26 @@ class PicScanner():
         self.scan_increment = 40
         self.scanned_points = []
         self.__scan()
+        LOG.debug("Scanned : "+str(self.scanned_points))
+
+    def __get_color(self,x,y):
+        rgb = self.image_rgb.getpixel((x,y))
+        for target in Color:
+            if rgb[0] >= target.value[0][0] and rgb[1] >= target.value[0][1] and rgb[2] >= target.value[0][2]:
+                if rgb[0] <= target.value[1][0] and rgb[1] <= target.value[1][1] and rgb[2] <= target.value[1][2]:
+                    return target
+        return None
+
 
     def __scan(self):
-        for target in Color:
-            for x in range(0,self.image_rgb.size[0],self.scan_increment):
-                for y in range(0,self.image_rgb.size[1],self.scan_increment):
-                    rgb = self.image_rgb.getpixel((x,y))
-                    if rgb[0] >= target.value[0][0] and rgb[1] >= target.value[0][1] and rgb[2] >= target.value[0][2]:
-                        if rgb[0] <= target.value[1][0] and rgb[1] <= target.value[1][1] and rgb[2] <= target.value[1][2]:
-                            self.scanned_points.append((x,y,target))
+        for x in range(0,self.image_rgb.size[0],self.scan_increment):
+            x_scan = []
+            for y in range(0,self.image_rgb.size[1],self.scan_increment):
+                color = self.__get_color(x,y)
+                if color is not None and self.validate_pixel(x,y,color):
+                    x_scan.append((x,y,color))
+            if len(x_scan) > 3: # remove obviously wrong points
+                self.scanned_points.extend(x_scan)
         self.scanned_points.sort()
 
     def __group_scanned_points(self,points):
@@ -84,14 +97,65 @@ class PicScanner():
             res.append(sublist_x)
         return res
     
+    def validate_pixel(self,x0,y0,color):
+
+        validated = True
+        for x in range(x0+1,x0+self.scan_increment//2):
+            if x >= 0 and x < self.image_rgb.size[0]:
+                if self.__get_color(x,y0) != color:
+                    validated = False
+                    break
+            else:
+                validated = False
+                break
+
+        if not validated:
+            validated = True
+            for x in range(x0-self.scan_increment//2,x0):
+                if x >= 0 and x < self.image_rgb.size[0]:
+                    if self.__get_color(x,y0) != color:
+                        validated = False
+                        break
+                else:
+                    validated = False
+                    break
+
+        if not validated:
+            validated = True
+            for y in range(y0+1,y0+self.scan_increment//2):
+                if y >= 0 and y < self.image_rgb.size[1]:
+                    if self.__get_color(x0,y) != color:
+                        validated = False
+                        break
+                else:
+                    validated = False
+                    break
+
+        if not validated:
+            validated = True
+            for y in range(y0-self.scan_increment//2,y0):
+                if y >= 0 and y < self.image_rgb.size[1]:
+                    if self.__get_color(x0,y) != color:
+                        validated = False
+                        break
+                else:
+                    validated = False
+                    break
+
+        return validated        
+
     def get_mapping(self):
         grouped_x = self.get_grouped_x()
+
+        LOG.debug(grouped_x)
         a = 0
 
         result = None
         for list_x in grouped_x:
             grouped = self.get_color_for_x(list_x)
+            LOG.debug(grouped)
             length = None
+
             for i in range(len(grouped)):
                 if length is None: length = len(grouped[i])
                 if len(grouped[i]) != length: raise Exception("Not all rows have the same length")
@@ -116,19 +180,31 @@ class PicScanner():
 
                 idx = 1 + a + i*len(grouped_x)
                 result[idx-1] = final_list
-                print(str(idx) + " " + str(final_list))
+                #print(str(idx) + " " + str(final_list))
             a+=1
 
         final_result = []
-        end_found = False
+
         for item in result:
-            if item is None or len(item) != 4: end_found = True
-            elif len(item) == 4 and not end_found: final_result.append(item)
+            if item is None or len(item) != 4:
+                #if len(item) == 5 and item[0] == Color.Grey:  # Ugly fix : background may be confused with grey
+                #    final_result.append(item)
+                #else: break
+                break
+            elif len(item) == 4: final_result.append(item)
             else: raise Exception("Error when retrieving mapping")
 
         mapping = [[item[3].value[2],item[2].value[2],item[1].value[2],item[0].value[2]] for item in final_result]
         mapping.append([ '0','0','0','0' ])
         mapping.append([ '0','0','0','0' ])
+
+        i = 0
+        for item in mapping:
+            i+=1
+            print(str(i)+" "+str(item))
+
+        #exit(0)
+        time.sleep(5)
 
         return mapping
 
